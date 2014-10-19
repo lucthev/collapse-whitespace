@@ -27,14 +27,11 @@ gulp.task('lint', function () {
     .pipe(jshint.reporter('jshint-stylish'))
 })
 
-gulp.task('test', ['minify'], function (done) {
-  karma.start({
-    configFile: path.join(__dirname, 'test/karma.conf.js'),
-    singleRun: true
-  }, done)
+gulp.task('test', ['minify'], function () {
+  console.log('To run the tests, open "test.html" in your browser.')
 })
 
-gulp.task('watch', ['test'], function () {
+gulp.task('watch', ['lint', 'minify'], function () {
   var watcher = gulp.watch(file, ['lint', 'minify'])
 
   function log (e) {

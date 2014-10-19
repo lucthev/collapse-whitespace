@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tests</title>
+  <style>
+    * {
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    #error {
+      margin: 0;
+      background: #B30024;
+      color: #FFF;
+      text-align: center;
+      font-weight: lighter;
+      white-space: pre;
+    }
+  </style>
+</head>
+<body>
+  <h2 id="error"></h2>
+  <p class="test">No_spaces</p>
+  <p class="result">No_spaces</p>
+  <p class="test">Single space</p>
+  <p class="result">Single space</p>
+  <p class="test">
+    Leading &amp; trailing spaces
+  </p>
+  <p class="result">Leading &amp; trailing spaces</p>
+  <p class="test">
+    <span>Whitespace around a span</span>
+  </p>
+  <p class="result"><span>Whitespace around a span</span></p>
+  <p class="test">
+    <span>
+      Whitespace around span &amp; text
+    </span>
+  </p>
+  <p class="result"><span>Whitespace around span &amp; text</span></p>
+  <p class="test">
+    <span>Whitespace around</span>
+    <span>two spans.</span>
+  </p>
+  <p class="result"><span>Whitespace around</span> <span>two spans.</span></p>
+  <p class="test">
+    <span>Span with trailing space, </span>
+    <span>followed by other span.</span>
+  </p>
+  <p class="result"><span>Span with trailing space, </span><span>followed by other span.</span></p>
+  <p class="test">
+    <span>Span;</span>
+    <span> other span with leading space.</span>
+  </p>
+  <p class="result"><span>Span;</span> <span>other span with leading space.</span></p>
+  <p class="test">
+    <span>Span 1;</span><span> span 2.</span>
+  </p>
+  <p class="result"><span>Span 1;</span><span> span 2.</span></p>
+  <div class="test">
+    Div, with mix of text
+    <p>and paragraphs</p>
+  </div>
+  <div class="result">Div, with mix of text<p>and paragraphs</p></div>
+  <div class="test">
+    <span>
+      Span with whitespace in div;
+    </span>
+    <p>
+      Paragraph with whitespace.
+    </p>
+  </div>
+  <div class="result"><span>Span with whitespace in div;</span><p>Paragraph with whitespace.</p></div>
+  <pre class="test">
+This
+is a pre</pre>
+  <pre class="result">
+This
+is a pre</pre>
+  <div class="test">
+    <pre>Pre,
+surrounded by whitespace</pre>
+  </div>
+  <div class="result"><pre>Pre,
+surrounded by whitespace</pre></div>
+  <div class="test">
+    <p>
+      Two
+    </p>
+    <p>
+      Paragraphs
+    </p>
+  </div>
+  <div class="result"><p>Two</p><p>Paragraphs</p></div>
+  <div class="test">
+    <p>
+      Paragraph
+    </p>
+    <span>
+      Span
+    </span>
+  </div>
+  <div class="result"><p>Paragraph</p><span>Span</span></div>
+
+  <script src="./whitespace.min.js"></script>
+  <script>
+    /* jshint strict:false */
+    /* global collapse */
+    var tests = document.querySelectorAll('.test'),
+        results = document.querySelectorAll('.result'),
+        i
+
+    function err (msg) {
+      document.querySelector('#error').textContent = msg
+      throw new Error(msg)
+    }
+
+    if (tests.length !== results.length)
+      err('The number of tests is not equal to the number of results.')
+
+    for (i = 0; i < tests.length; i += 1) {
+      collapse(tests[i])
+      if (tests[i].innerHTML !== results[i].innerHTML)
+        err('"' + tests[i].innerHTML + '" should be "' + results[i].innerHTML + '"')
+    }
+  </script>
+</body>
+</html>
