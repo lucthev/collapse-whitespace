@@ -35,34 +35,6 @@ function isElem (node) {
   return node && node.nodeType === Node.ELEMENT_NODE
 }
 
-function nextSibling (root) {
-  return function next (node) {
-    while (node && node !== root) {
-      if (node.nextSibling)
-        return node.nextSibling
-
-      node = node.parentNode
-    }
-
-    return null
-  }
-}
-
-function firstChild (next) {
-  return function first (node) {
-    return node.firstChild ? node.firstChild : next(node)
-  }
-}
-
-function removeChild (next) {
-  return function remove (node) {
-    var nextNode = next(node)
-
-    node.parentNode.removeChild(node)
-    return nextNode
-  }
-}
-
 /**
  * whitespace(elem) removes extraneous whitespace from an element
  * and its children.
@@ -70,14 +42,39 @@ function removeChild (next) {
  * @param {Element} root
  */
 function whitespace (root) {
-  var next = nextSibling(root),
-      first = firstChild(next),
-      remove = removeChild(next),
+  var startSpace = /^ /,
+      endSpace = / $/,
       nextNode,
       prevNode,
       prevText,
       node,
       text
+
+  function next (node) {
+    while (node && node !== root) {
+      if (node.nextSibling)
+        return node.nextSibling
+
+      node = node.parentNode
+      if (isBlock(node)) {
+        prevText.data = prevText.data.replace(/[ \r\n\t]$/, '')
+        prevText = null
+      }
+    }
+
+    return null
+  }
+
+  function first (node) {
+    return node.firstChild ? node.firstChild : next(node)
+  }
+
+  function remove (node) {
+    var nextNode = next(node)
+
+    node.parentNode.removeChild(node)
+    return nextNode
+  }
 
   if (root.nodeName === 'PRE') return
 
@@ -93,12 +90,12 @@ function whitespace (root) {
       text = node.data.replace(/[ \r\n\t]+/g, ' ')
 
       if (!prevText || prevNode && isBlock(prevNode))
-        text = text.replace(/^[ \r\n\t]+/, '')
+        text = text.replace(startSpace, '')
       if (nextNode && isBlock(nextNode))
-        text = text.replace(/[ \r\n\t]+$/, '')
+        text = text.replace(endSpace, '')
 
-      if (prevText && /[ \r\n\t]$/.test(prevText.data) &&
-          /^[ \r\n\t]/.test(text))
+      if (prevText && endSpace.test(prevText.data) &&
+          startSpace.test(text))
         text = text.substr(1)
 
       if (text) {
@@ -115,8 +112,7 @@ function whitespace (root) {
       }
 
       if (prevText && isBlock(node)) {
-        // FIXME: most of these Regexes should only be for spaces
-        prevText.data = prevText.data.replace(/[ \r\n\t]$/, '')
+        prevText.data = prevText.data.replace(endSpace, '')
         prevText = null
       }
 
@@ -128,7 +124,7 @@ function whitespace (root) {
 
   // Trim trailing space from last text node
   if (prevText)
-    prevText.data = prevText.data.replace(/[ \r\n\t]+$/, '')
+    prevText.data = prevText.data.replace(endSpace, '')
 }
 
 module.exports = whitespace
