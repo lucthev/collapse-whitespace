@@ -53,15 +53,13 @@
   </p>
   <p class="result"><span>Whitespace around</span> <span>two spans.</span></p>
   <p class="test">
-    <span>Span with trailing space, </span>
-    <span>followed by other span.</span>
+    <span>Span with trailing space, </span><span>followed by other span.</span>
   </p>
   <p class="result"><span>Span with trailing space, </span><span>followed by other span.</span></p>
   <p class="test">
-    <span>Span;</span>
-    <span> other span with leading space.</span>
+    <span>Span;</span><span> other span with leading space.</span>
   </p>
-  <p class="result"><span>Span;</span> <span>other span with leading space.</span></p>
+  <p class="result"><span>Span;</span><span> other span with leading space.</span></p>
   <p class="test">
     <span>Span 1;</span><span> span 2.</span>
   </p>
@@ -110,6 +108,17 @@ surrounded by whitespace</pre></div>
     </span>
   </div>
   <div class="result"><p>Paragraph</p><span>Span</span></div>
+  <div class="test">
+    Text;
+    more text.
+  </div>
+  <div class="result">Text; more text.</div>
+  <div class="test">
+    Text,
+    <div>div,</div>
+    more text.
+  </div>
+  <div class="result">Text,<div>div,</div>more text.</div>
 
   <script src="./whitespace.min.js"></script>
   <script>
