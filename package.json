@@ -1,6 +1,6 @@
 {
   "name": "collapse-whitespace",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Remove unnecessary whitespace from an element.",
   "main": "./whitespace.js",
   "scripts": {
@@ -8,6 +8,13 @@
     "js": "./node_modules/.bin/gulp",
     "dev": "./node_modules/.bin/gulp watch"
   },
+  "keywords": [
+    "browser",
+    "collapse",
+    "whitespace",
+    "collapse-whitespace",
+    "dom"
+  ],
   "repository": {
     "type": "git",
     "url": "git://github.com/lucthev/collapse-whitespace"
@@ -20,15 +27,9 @@
   "homepage": "https://github.com/lucthev/serialize",
   "devDependencies": {
     "browserify": "~6.1.0",
-    "chai": "~1.9.2",
     "gulp": "~3.8.8",
     "gulp-jshint": "~1.5.3",
     "jshint-stylish": "~0.1.5",
-    "karma": "~0.12.24",
-    "karma-chai": "~0.1.0",
-    "karma-chrome-launcher": "~0.1.5",
-    "karma-mocha": "~0.1.9",
-    "mocha": "~1.21.5",
     "uglify-js": "~2.4.15"
   }
 }
