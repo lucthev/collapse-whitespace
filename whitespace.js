@@ -16,6 +16,7 @@ var blocks = {
   H5: 1,
   H6: 1,
   HEADER: 1,
+  HR: 1,
   LI: 1,
   OL: 1,
   P: 1,
