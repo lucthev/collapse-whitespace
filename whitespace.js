@@ -57,7 +57,7 @@ function whitespace (root) {
         return node.nextSibling
 
       node = node.parentNode
-      if (isBlock(node)) {
+      if (prevText && isBlock(node)) {
         prevText.data = prevText.data.replace(/[ \r\n\t]$/, '')
         prevText = null
       }
