@@ -1,6 +1,6 @@
 {
   "name": "collapse-whitespace",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Remove unnecessary whitespace from an element.",
   "main": "./whitespace.js",
   "scripts": {
