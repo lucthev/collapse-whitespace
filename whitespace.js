@@ -21,6 +21,7 @@ var blocks = {
   OL: 1,
   P: 1,
   PRE: 1,
+  SECTION: 1,
   UL: 1
 }
 
