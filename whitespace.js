@@ -1,33 +1,14 @@
 'use strict';
 
-// Things that are normally block elements.
-var blocks = {
-  ADDRESS: 1,
-  ARTICLE: 1,
-  ASIDE: 1,
-  BLOCKQUOTE: 1,
-  DIV: 1,
-  FIGCAPTION: 1,
-  FIGURE: 1,
-  FOOTER: 1,
-  H1: 1,
-  H2: 1,
-  H3: 1,
-  H4: 1,
-  H5: 1,
-  H6: 1,
-  HEADER: 1,
-  HR: 1,
-  LI: 1,
-  OL: 1,
-  P: 1,
-  PRE: 1,
-  SECTION: 1,
-  UL: 1
-}
+var blocks = require('block-elements').map(function (block) {
+  return block.toUpperCase()
+})
+
+if (blocks.indexOf('LI') < 0)
+  blocks.push('LI')
 
 function isBlock (node) {
-  return !!(isElem(node) && blocks[node.nodeName])
+  return isElem(node) && blocks.indexOf(node.nodeName) >= 0
 }
 
 function isText (node) {
