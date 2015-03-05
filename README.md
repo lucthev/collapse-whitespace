@@ -28,7 +28,9 @@ Otherwise, just include the bundled file, `whitespace.min.js`, somewhere on your
 
 ### Important things to keep in mind:
 
-1. `collapse-whitespace` will almost certainly make modifications to the given node; these may include joining adjacent text nodes, removing whitespace from text nodes, and even removing text nodes entirely if they contain only whitespace. Whitespace, if you’re curious, is those characters that match the RegExp `/ \t\r\n/`.
+1. `collapse-whitespace` will almost certainly make modifications to the given node; these may include joining adjacent text nodes, removing whitespace from text nodes, and even removing text nodes entirely if they contain only whitespace. Non-text and non-element nodes (e.g. comments) will also be removed.
+
+    *Note*: whitespace is those characters that match the [regular expression][regexp] `/ \t\r\n/`.
 
 2. `collapse-whitespace` does not take into account the parent(s) of the given node. For example,
 
@@ -49,7 +51,7 @@ Otherwise, just include the bundled file, `whitespace.min.js`, somewhere on your
 
     This will almost certainly result in a visually different representation of that text — unless you’ve applied CSS `whitespace: pre` to the parent `pre`, which bring us to the next point:
 
-3. `collapse-whitespace` does not pay attention to CSS styles, even `style` attributes. Instead, it relies on a theoretical [list](https://github.com/lucthev/collapse-whitespace/blob/master/whitespace.js#L3-L24) of block elements, and assumes that only `pre` elements have `whitespace: pre`. So, if you’re doing something like:
+3. `collapse-whitespace` does not pay attention to CSS styles, even `style` attributes. Instead, it relies on a theoretical [list][blocks] of block elements, and assumes that only `pre` elements have `whitespace: pre`. So, if you’re doing something like:
 
     ```html
     <style>
@@ -72,4 +74,7 @@ Otherwise, just include the bundled file, `whitespace.min.js`, somewhere on your
 
 ## License
 
-MIT.
+MIT
+
+[regexp]: https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/RegExp
+[blocks]: https://github.com/webmodules/block-elements
