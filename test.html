@@ -119,6 +119,14 @@ surrounded by whitespace</pre></div>
     more text.
   </div>
   <div class="result">Text,<div>div,</div>more text.</div>
+  <div class="test">
+    Text
+    <!-- Comment -->
+    More text
+  </div>
+  <div class="result">Text More text</div>
+  <div class="test">                         </div><!-- Only whitespace -->
+  <div class="result"></div>
 
   <script src="./whitespace.min.js"></script>
   <script>
