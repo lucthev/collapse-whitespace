@@ -1,13 +1,10 @@
 'use strict';
 
-var blocks = require('block-elements').map(function (block) {
-  return block.toUpperCase()
+var blocks = require('block-elements').map(function (name) {
+  return name.toUpperCase()
 })
 
-if (blocks.indexOf('LI') < 0)
-  blocks.push('LI')
-
-function isBlock (node) {
+function defaultBlockTest (node) {
   return isElem(node) && blocks.indexOf(node.nodeName) >= 0
 }
 
@@ -20,12 +17,16 @@ function isElem (node) {
 }
 
 /**
- * whitespace(elem) removes extraneous whitespace from an element
- * and its children.
+ * whitespace(elem [, isBlock]) removes extraneous whitespace from an
+ * the given element. The function isBlock may optionally be passed in
+ * to determine whether or not an element is a block element; if none
+ * is provided, defaults to using the list of block elements provided
+ * by the `block-elements` module.
  *
  * @param {Element} root
+ * @param {Function} isBlock
  */
-function whitespace (root) {
+function whitespace (root, isBlock) {
   var startSpace = /^ /,
       endSpace = / $/,
       nextNode,
@@ -33,6 +34,9 @@ function whitespace (root) {
       prevText,
       node,
       text
+
+  if (typeof isBlock !== 'function')
+    isBlock = defaultBlockTest
 
   function next (node) {
     while (node && node !== root) {
