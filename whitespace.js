@@ -9,11 +9,11 @@ function defaultBlockTest (node) {
 }
 
 function isText (node) {
-  return node && node.nodeType === Node.TEXT_NODE
+  return node && node.nodeType === 3
 }
 
 function isElem (node) {
-  return node && node.nodeType === Node.ELEMENT_NODE
+  return node && node.nodeType === 1
 }
 
 /**
