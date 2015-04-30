@@ -1,25 +1,25 @@
-# Various programs
+babel := ./node_modules/.bin/babel
 browserify := ./node_modules/.bin/browserify
+uglify := ./node_modules/.bin/uglifyjs
 standard := ./node_modules/.bin/standard
-uglifyjs := ./node_modules/.bin/uglifyjs
 
-# Build options
-src := whitespace.js
-all := $(shell $(browserify) --list $(src))
+SRC = $(wildcard src/*.js)
+LIB = $(SRC:src/%.js=lib/%.js)
 
-whitespace.min.js: $(all)
-	$(browserify) -s collapse $(src) | $(uglifyjs) -m -o $@
+whitespace.min.js: $(LIB)
+	$(browserify) lib/whitespace.js -s collapse | $(uglify) -m > $@
+
+lib/%.js: src/%.js
+	@mkdir -p $(@D)
+	$(babel) --loose all $< -o $@
 
 lint:
-	@$(standard)
-
-clean:
-	rm -rf whitespace.min.js node_modules
+	$(standard) $(SRC)
 
 test: whitespace.min.js
 	@echo "Open test.html in your browser to run tests."
 
-publish: whitespace.min.js
+publish: whitespace.min.js $(LIB)
 	npm publish
 
-.PHONY: clean lint test publish
+.PHONY: lint test publish

@@ -127,14 +127,27 @@ surrounded by whitespace</pre></div>
   <div class="result">Text More text</div>
   <div class="test">                         </div><!-- Only whitespace -->
   <div class="result"></div>
+  <div class="test">Space <pre>text</pre> space</div>
+  <div class="result">Space<pre>text</pre>space</div>
+  <div class="test"><img src="/404.jpg"> Text after an image</div>
+  <div class="result"><img src="/404.jpg"> Text after an image</div>
+  <div class="test">Text before an image <img src="/404.jpg"></div>
+  <div class="result">Text before an image <img src="/404.jpg"></div>
+  <div class="test"><input type="text"> Text after an input</div>
+  <div class="result"><input type="text"> Text after an input</div>
+  <div class="test">Text before an input <input type="text"></div>
+  <div class="result">Text before an input <input type="text"></div>
+  <div class="test">Space <hr> more space</div>
+  <div class="result">Space<hr>more space</div>
+  <div class="test">Space <br> more space</div>
+  <div class="result">Space<br>more space</div>
+  <div class="test">Space <img src="/404.jpg"><span> more space</span></div>
+  <div class="result">Space <img src="/404.jpg"><span> more space</span></div>
 
   <script src="./whitespace.min.js"></script>
   <script>
-    /* jshint strict:false */
-    /* global collapse */
-    var tests = document.querySelectorAll('.test'),
-        results = document.querySelectorAll('.result'),
-        i
+    var tests = document.querySelectorAll('.test')
+    var results = document.querySelectorAll('.result')
 
     function err (msg) {
       document.querySelector('#error').textContent = msg
@@ -144,7 +157,7 @@ surrounded by whitespace</pre></div>
     if (tests.length !== results.length)
       err('The number of tests is not equal to the number of results.')
 
-    for (i = 0; i < tests.length; i += 1) {
+    for (var i = 0; i < tests.length; i += 1) {
       collapse(tests[i])
       if (tests[i].innerHTML !== results[i].innerHTML)
         err('"' + tests[i].innerHTML + '" should be "' + results[i].innerHTML + '"')
