@@ -1,6 +1,6 @@
 # Various programs
 browserify := ./node_modules/.bin/browserify
-jshint := ./node_modules/.bin/jshint
+standard := ./node_modules/.bin/standard
 uglifyjs := ./node_modules/.bin/uglifyjs
 
 # Build options
@@ -11,7 +11,7 @@ whitespace.min.js: $(all)
 	$(browserify) -s collapse $(src) | $(uglifyjs) -m -o $@
 
 lint:
-	@$(jshint) $(all)
+	@$(standard)
 
 clean:
 	rm -rf whitespace.min.js node_modules

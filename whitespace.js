@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 
 var blocks = require('block-elements').map(function (name) {
   return name.toUpperCase()
@@ -27,21 +27,23 @@ function isElem (node) {
  * @param {Function} isBlock
  */
 function whitespace (root, isBlock) {
-  var startSpace = /^ /,
-      endSpace = / $/,
-      nextNode,
-      prevNode,
-      prevText,
-      node,
-      text
+  var startSpace = /^ /
+  var endSpace = / $/
+  var nextNode
+  var prevNode
+  var prevText
+  var node
+  var text
 
-  if (typeof isBlock !== 'function')
+  if (typeof isBlock !== 'function') {
     isBlock = defaultBlockTest
+  }
 
   function next (node) {
     while (node && node !== root) {
-      if (node.nextSibling)
+      if (node.nextSibling) {
         return node.nextSibling
+      }
 
       node = node.parentNode
       if (prevText && isBlock(node)) {
@@ -77,14 +79,18 @@ function whitespace (root, isBlock) {
     if (isText(node)) {
       text = node.data.replace(/[ \r\n\t]+/g, ' ')
 
-      if (!prevText || prevNode && isBlock(prevNode))
+      if (!prevText || prevNode && isBlock(prevNode)) {
         text = text.replace(startSpace, '')
-      if (nextNode && isBlock(nextNode))
+      }
+
+      if (nextNode && isBlock(nextNode)) {
         text = text.replace(endSpace, '')
+      }
 
       if (prevText && endSpace.test(prevText.data) &&
-          startSpace.test(text))
+          startSpace.test(text)) {
         text = text.substr(1)
+      }
 
       if (text) {
         node.data = text
@@ -111,8 +117,9 @@ function whitespace (root, isBlock) {
   }
 
   // Trim trailing space from last text node
-  if (prevText)
+  if (prevText) {
     prevText.data = prevText.data.replace(endSpace, '')
+  }
 }
 
 module.exports = whitespace

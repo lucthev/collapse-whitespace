@@ -25,7 +25,7 @@
   "homepage": "https://github.com/lucthev/serialize",
   "devDependencies": {
     "browserify": "~6.1.0",
-    "jshint": "~2.6.3",
+    "standard": "^3.7.2",
     "uglify-js": "~2.4.15"
   },
   "dependencies": {
