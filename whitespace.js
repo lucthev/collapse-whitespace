@@ -28,7 +28,8 @@ function isElem (node) {
  */
 function whitespace (root, isBlock) {
   var startSpace = /^ /,
-      endSpace = / $/,
+      endSpace = /\s$/,
+      startBreak = /^[\n|\r|\r\n]/,
       nextNode,
       prevNode,
       prevText,
@@ -75,13 +76,14 @@ function whitespace (root, isBlock) {
     nextNode = node.nextSibling
 
     if (isText(node)) {
-      text = node.data.replace(/[ \r\n\t]+/g, ' ')
+      text = node.data.replace( startBreak, '' )
+      text = text.replace(/[ \r\n\t]+/g, ' ')
 
       if (!prevText || prevNode && isBlock(prevNode))
         text = text.replace(startSpace, '')
       if (nextNode && isBlock(nextNode))
         text = text.replace(endSpace, '')
-
+      
       if (prevText && endSpace.test(prevText.data) &&
           startSpace.test(text))
         text = text.substr(1)
