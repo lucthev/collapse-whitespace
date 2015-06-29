@@ -127,7 +127,18 @@ surrounded by whitespace</pre></div>
   <div class="result">Text More text</div>
   <div class="test">                         </div><!-- Only whitespace -->
   <div class="result"></div>
-
+  
+  <div class="test">
+Hello,<br />
+<br />
+lorem ipsum:<br />
+<br />
+- dolor<br />
+- lorem<br />
+- ipsum<br />
+<br />
+  </div><!-- breaks and lists -->
+  <div class="result">Hello,<br /><br />lorem ipsum:<br /><br />- dolor<br />- lorem<br />- ipsum<br /><br /></div>
   <script src="./whitespace.min.js"></script>
   <script>
     /* jshint strict:false */
