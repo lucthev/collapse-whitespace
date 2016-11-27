@@ -3,6 +3,7 @@
   "version": "1.1.2",
   "description": "Remove unnecessary whitespace from an element.",
   "main": "lib/whitespace.js",
+  "types": "whitespace.d.ts",
   "scripts": {
     "test": "make test"
   },
