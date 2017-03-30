@@ -54,7 +54,7 @@ function collapseWhitespace (elem, isBlock) {
   let node = next(prev, elem)
 
   while (node !== elem) {
-    if (node.nodeType === 3 || node.nodeType === 4) { // Node.TEXT_NODE or Node.CDATA_SECTION_NODE
+    if (node.nodeType === 3) { // Node.TEXT_NODE
       let text = node.data.replace(/[ \r\n\t]+/g, ' ')
 
       if ((!prevText || / $/.test(prevText.data)) &&
@@ -70,6 +70,9 @@ function collapseWhitespace (elem, isBlock) {
 
       node.data = text
       prevText = node
+    } else if (node.nodeType === 4) {  // Node.CDATA_SECTION_NODE
+      prevText = null;
+      prevVoid = false;
     } else if (node.nodeType === 1) { // Node.ELEMENT_NODE
       if (isBlock(node) || node.nodeName === 'BR') {
         if (prevText) {
