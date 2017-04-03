@@ -43,7 +43,7 @@ For more examples of what `collapse-whitespace` does, check out the [test page](
 
 ### collapse(node [, isBlock [, isPre]])
 
-Removes all extraneous whitespace from the given node. By default, `collapse-whitespace` relies on a theoretical [list][blocks] of block elements to determine which elements are block and which ones are inline. This list may be unsuitable for your needs; the optional parameter `isBlock` can be used to tweak this behaviour. `isBlock` should be a function that accepts a DOM node and returns a Boolean. 
+Removes all extraneous whitespace from the given node. By default, `collapse-whitespace` relies on a theoretical [list][blocks] of block elements to determine which elements are block and which ones are inline. This list may be unsuitable for your needs; the optional parameter `isBlock` can be used to tweak this behaviour. `isBlock` should be a function that accepts a DOM node and returns a Boolean.
 
 Note that `collapse-whitespace` also does not take into account the parent(s) of the given node:
 
