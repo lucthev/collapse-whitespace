@@ -21,6 +21,18 @@ function isBlockElem (node) {
 }
 
 /**
+ * isPreElem(node) determines if the given node is a PRE element.
+ * 
+ * Whitespace for PRE elements are not collapsed.
+ * 
+ * @param {Node} node
+ * @return {Boolean}
+ */
+function isPreElem (node) {
+  return node.nodeName === 'PRE';
+}
+
+/**
  * isVoid(node) determines if the given node is a void element.
  *
  * @param {Node} node
@@ -40,18 +52,22 @@ function isVoid (node) {
  * @param {Node} elem
  * @param {Function} blockTest
  */
-function collapseWhitespace (elem, isBlock) {
+function collapseWhitespace (elem, isBlock, isPre) {
   if (!elem.firstChild || elem.nodeName === 'PRE') return
 
   if (typeof isBlock !== 'function') {
     isBlock = isBlockElem
   }
 
+  if (typeof isPre !== 'function') {
+    isPre = isPreElem;
+  }
+
   let prevText = null
   let prevVoid = false
 
   let prev = null
-  let node = next(prev, elem)
+  let node = next(prev, elem, isPre)
 
   while (node !== elem) {
     if (node.nodeType === 3 || node.nodeType === 4) { // Node.TEXT_NODE or Node.CDATA_SECTION_NODE
@@ -69,6 +85,7 @@ function collapseWhitespace (elem, isBlock) {
       }
 
       node.data = text
+      
       prevText = node
     } else if (node.nodeType === 1) { // Node.ELEMENT_NODE
       if (isBlock(node) || node.nodeName === 'BR') {
@@ -88,7 +105,7 @@ function collapseWhitespace (elem, isBlock) {
       continue
     }
 
-    let nextNode = next(prev, node)
+    let nextNode = next(prev, node, isPre)
     prev = node
     node = nextNode
   }
@@ -117,15 +134,16 @@ function remove (node) {
 }
 
 /**
- * next(prev, current) returns the next node in the sequence, given the
+ * next(prev, current, isPre) returns the next node in the sequence, given the
  * current and previous nodes.
  *
  * @param {Node} prev
  * @param {Node} current
+ * @param {Function} isPre
  * @return {Node}
  */
-function next (prev, current) {
-  if ((prev && prev.parentNode === current) || current.nodeName === 'PRE') {
+function next (prev, current, isPre) {
+  if ((prev && prev.parentNode === current) || isPre(current)) {
     return current.nextSibling || current.parentNode
   }
 
