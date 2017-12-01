@@ -4,6 +4,8 @@
   "description": "Remove unnecessary whitespace from an element.",
   "main": "lib/whitespace.js",
   "types": "whitespace.d.ts",
+  "module": "src/whitespace.js",
+  "jsnext:main": "src/whitespace.js",
   "scripts": {
     "prepublish": "make",
     "test": "make test"

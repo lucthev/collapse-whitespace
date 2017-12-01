@@ -150,4 +150,4 @@ function next (prev, current, isPre) {
   return current.firstChild || current.nextSibling || current.parentNode
 }
 
-module.exports = collapseWhitespace
+export default collapseWhitespace
