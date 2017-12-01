@@ -22,9 +22,9 @@ function isBlockElem (node) {
 
 /**
  * isPreElem(node) determines if the given node is a PRE element.
- * 
+ *
  * Whitespace for PRE elements are not collapsed.
- * 
+ *
  * @param {Node} node
  * @return {Boolean}
  */
@@ -85,7 +85,7 @@ function collapseWhitespace (elem, isBlock, isPre) {
       }
 
       node.data = text
-      
+
       prevText = node
     } else if (node.nodeType === 1) { // Node.ELEMENT_NODE
       if (isBlock(node) || node.nodeName === 'BR') {
