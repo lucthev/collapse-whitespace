@@ -5,7 +5,7 @@
   "main": "lib/whitespace.js",
   "types": "whitespace.d.ts",
   "scripts": {
-    "prepublish": "make",
+    "prepublishOnly": "make",
     "test": "make test"
   },
   "keywords": [
