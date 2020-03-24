@@ -17,6 +17,10 @@
       height: 100%;
     }
 
+    code {
+      white-space: pre-wrap;
+    }
+
     #error {
       margin: 0;
       background: #B30024;
@@ -143,25 +147,48 @@ surrounded by whitespace</pre></div>
   <div class="result">Space<br>more space</div>
   <div class="test">Space <img src="/404.jpg"><span> more space</span></div>
   <div class="result">Space <img src="/404.jpg"><span> more space</span></div>
+  <div id="inlinePre">
+    <div class="test"><code>four    spaces</code></div>
+    <div class="result"><code>four    spaces</code></div>
+    <div class="test">Space <code>no space</code> more space</div>
+    <div class="result">Space <code>no space</code> more space</div>
+    <div class="test">Space <code> leading code space</code> more space</div>
+    <div class="result">Space <code> leading code space</code> more space</div>
+    <div class="test">Space <code>trailing code space </code> more space</div>
+    <div class="result">Space <code>trailing code space </code> more space</div>
+    <div class="test">Space <code>trailing code space </code><b> more space in tag</b></div>
+    <div class="result">Space <code>trailing code space </code><b> more space in tag</b></div>
+    <div class="test">Space <code>trailing code space </code> <b> more space after code and tag</b></div>
+    <div class="result">Space <code>trailing code space </code> <b>more space after code and tag</b></div>
+    <div class="test"><b>Space before tag </b><code>my code</code></div>
+    <div class="result"><b>Space before tag </b><code>my code</code></div>
+    <div class="test"><b>Space before tag and code </b> <code>my code</code></div>
+    <div class="result"><b>Space before tag and code </b><code>my code</code></div>
+  </div>
 
   <script src="./whitespace.min.js"></script>
   <script>
-    var tests = document.querySelectorAll('.test')
-    var results = document.querySelectorAll('.result')
-
     function err (msg) {
       document.querySelector('#error').textContent = msg
       throw new Error(msg)
     }
 
-    if (tests.length !== results.length)
-      err('The number of tests is not equal to the number of results.')
-
-    for (var i = 0; i < tests.length; i += 1) {
-      collapse(tests[i])
-      if (tests[i].innerHTML !== results[i].innerHTML)
-        err('"' + tests[i].innerHTML + '" should be "' + results[i].innerHTML + '"')
+    function runTests(testSelector, resultSelector, isBlock, isPre) {
+      var tests = document.querySelectorAll(testSelector)
+      var results = document.querySelectorAll(resultSelector)
+      if (tests.length !== results.length)
+        err('The number of tests is not equal to the number of results.')
+        for (var i = 0; i < tests.length; i += 1) {
+          collapse(tests[i], isBlock, isPre)
+          if (tests[i].innerHTML !== results[i].innerHTML)
+            err('"' + tests[i].innerHTML + '" should be "' + results[i].innerHTML + '"')
+        }
     }
+
+    runTests('body > .test', 'body > .result')
+    runTests('#inlinePre > .test', '#inlinePre > .result', null, function (node) {
+      return node.nodeName === 'PRE' || node.nodeName === 'CODE'
+    })
   </script>
 </body>
 </html>

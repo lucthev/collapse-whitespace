@@ -64,7 +64,7 @@ function collapseWhitespace (elem, isBlock, isPre) {
   }
 
   let prevText = null
-  let prevVoid = false
+  let keepLeadingWs = false
 
   let prev = null
   let node = next(prev, elem, isPre)
@@ -74,7 +74,7 @@ function collapseWhitespace (elem, isBlock, isPre) {
       let text = node.data.replace(/[ \r\n\t]+/g, ' ')
 
       if ((!prevText || / $/.test(prevText.data)) &&
-          !prevVoid && text[0] === ' ') {
+          !keepLeadingWs && text[0] === ' ') {
         text = text.substr(1)
       }
 
@@ -94,11 +94,14 @@ function collapseWhitespace (elem, isBlock, isPre) {
         }
 
         prevText = null
-        prevVoid = false
-      } else if (isVoid(node)) {
-        // Avoid trimming space around non-block, non-BR void elements.
+        keepLeadingWs = false
+      } else if (isVoid(node) || isPre(node)) {
+        // Avoid trimming space around non-block, non-BR void elements and inline PRE.
         prevText = null
-        prevVoid = true
+        keepLeadingWs = true
+      } else if (prevText) {
+        // Drop protection if set previously.
+        keepLeadingWs = false
       }
     } else {
       node = remove(node)
